@@ -1,11 +1,13 @@
+import React from 'react';
 import './App.css';
 
-import HookForm from './components/HookForm'
+import OneStateForm from './components/OneStateForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
-      <HookForm />
+      <OneStateForm />
     </div>
   );
 }
