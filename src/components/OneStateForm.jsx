@@ -51,6 +51,9 @@ const OneStateForm = () => {
                 valToUpdate.length < 8 ?
                     errors.password = "password must be at least 8 characters" :
                     errors.password = ""
+                valToUpdate !== formState.confirmPassword ?
+                    errors.confirmPassword = "passwords must match" :
+                    errors.confirmPassword = ""
                 break;
             case 'confirmPassword':
                 valToUpdate !== formState.password ?
@@ -61,9 +64,19 @@ const OneStateForm = () => {
         setFormError(errors)
     }
 
+    const validateForm = () => {
+        if(formError.firstName || formError.lastName || formError.email || formError.password || formError.confirmPassword){
+            return true
+        }else{
+            return false
+        }
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        // extra validation
+        // if error exists, do not submit
         // send the completed form into backend using API
         const newUser = formState
         console.log(newUser)
@@ -71,7 +84,7 @@ const OneStateForm = () => {
     }
 
     return (
-        <div class="container mb-3">
+        <div class="container mb-5">
             <form onSubmit={handleSubmit}>
                 {
                     hasBeenSubmitted ?
@@ -109,7 +122,7 @@ const OneStateForm = () => {
                         name="confirmPassword" value={formState.confirmPassword} />
                     <p class="form-text" style={{ color: "red" }}> {formError.confirmPassword} </p>
                 </div>
-                <button className="btn btn-primary" type="submit" disabled={formError.firstName || formError.lastName || formError.email || formError.password || formError.confirmPassword}> Submit</button>
+                <button className="btn btn-primary" type="submit" disabled={validateForm()}> Submit</button>
             </form>
             <FormDisplay firstName={formState.firstName} lastName={formState.lastName} email={formState.email} password={formState.password} confirmPassword={formState.confirmPassword} />
         </div>
